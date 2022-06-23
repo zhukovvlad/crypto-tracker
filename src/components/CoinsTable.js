@@ -15,10 +15,14 @@ import {
 const CoinsTable = () => {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState('');
 
   const { currency } = CryptoState();
 
-  const fetchCoins = async () => {
+  console.log(coins);
+
+  useEffect(() => {
+    const fetchCoins = async () => {
     setLoading(true);
     const { data } = await axios.get(CoinList(currency));
 
@@ -26,9 +30,6 @@ const CoinsTable = () => {
     setLoading(false);
   };
 
-  console.log(coins);
-
-  useEffect(() => {
     fetchCoins();
   }, [currency]);
 
@@ -54,6 +55,7 @@ const CoinsTable = () => {
             label="Search For a Crypto Currency.."
             variant="outlined"
             style={{ marginBottom: 20, width: "100%" }}
+            onChange={(e) =>setSearch(e.target.value)}
         />
       </Container>
     </ThemeProvider>
