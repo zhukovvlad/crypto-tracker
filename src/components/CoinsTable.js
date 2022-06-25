@@ -21,6 +21,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { numberWithCommas } from "./Banner/Carousel";
+import { Pagination } from "@material-ui/lab";
 
 const CoinsTable = () => {
   const navigate = useNavigate();
@@ -71,6 +72,11 @@ const CoinsTable = () => {
         },
         fontFamily: "Montserrat"
     },
+    pagination: {
+        "& .MuiPaginationItem-root": {
+            color: "gold",
+        }
+    }
   }));
 
   const classes = useStyles();
@@ -182,6 +188,20 @@ const CoinsTable = () => {
             </Table>
           )}
         </TableContainer>
+        <Pagination
+            style={{
+                padding: 20,
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+            }}
+            classes={{ ul: classes.pagination }}
+            count={(handleSearch()?.length / 10).toFixed(0)}
+            onChange={(_, value) => {
+                setPage(value);
+                window.scroll(0, 450);
+            }}
+        />
       </Container>
     </ThemeProvider>
   );
