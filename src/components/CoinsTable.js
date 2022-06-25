@@ -20,6 +20,7 @@ import {
   Typography,
   TextField,
 } from "@material-ui/core";
+import { numberWithCommas } from "./Banner/Carousel";
 
 const CoinsTable = () => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const CoinsTable = () => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
 
-  const { currency } = CryptoState();
+  const { currency, symbol } = CryptoState();
 
   console.log(coins);
 
@@ -60,7 +61,16 @@ const CoinsTable = () => {
     );
   };
 
-  const useStyles = makeStyles(() => ({}));
+  const useStyles = makeStyles(() => ({
+    row: {
+        backgroundColor: "#16171a",
+        cursor: "pointer",
+        "&:hover": {
+            backgroundColor: "#131111",
+        },
+        fontFamily: "Montserrat"
+    },
+  }));
 
   const classes = useStyles();
 
@@ -94,7 +104,7 @@ const CoinsTable = () => {
                         fontFamily: "Montserrat",
                       }}
                       key={head}
-                      align={head === "Coin" ? "" : "right"}
+                      align={head === "Coin" ? "left" : "right"}
                     >
                       {head}
                     </TableCell>
@@ -114,7 +124,7 @@ const CoinsTable = () => {
                       <TableCell
                         component="th"
                         scope="row"
-                        styles={{
+                        style={{
                           display: "flex",
                           gap: 15,
                         }}
@@ -138,7 +148,29 @@ const CoinsTable = () => {
                           >
                             {row.symbol}
                           </span>
+                          <span style={{ color: "darkgray" }}>{row.name}</span>
                         </div>
+                      </TableCell>
+                      <TableCell align="right">
+                        {symbol}{" "}
+                        {numberWithCommas(row.current_price.toFixed(2))}
+                      </TableCell>
+                      <TableCell
+                        align="right"
+                        style={{
+                          color: profit > 0 ? "rgb(14, 203, 129" : "red",
+                          fontWeight: 500,
+                        }}
+                      >
+                        {profit && "+"}
+                        {row.price_change_percentage_24h.toFixed(2)}%
+                      </TableCell>
+                      <TableCell align="right">
+                        {symbol}{" "}
+                        {numberWithCommas(
+                          row.market_cap.toString().slice(0, -6)
+                        )}
+                        M
                       </TableCell>
                     </TableRow>
                   );
