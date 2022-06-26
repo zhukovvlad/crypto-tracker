@@ -5,9 +5,10 @@ import { SingleCoin } from "../config/api";
 import ReactHtmlParser from "react-html-parser";
 
 import axios from "axios";
-import { makeStyles, Typography } from "@material-ui/core";
+import { LinearProgress, makeStyles, Typography } from "@material-ui/core";
 
 import CoinInfo from "../components/CoinInfo";
+import { numberWithCommas } from "../components/Banner/Carousel";
 
 const CoinPage = () => {
   const { id } = useParams();
@@ -70,6 +71,8 @@ const CoinPage = () => {
 
   const classes = useStyles();
 
+  if (!coin) return <LinearProgress style={{ backgroundColor: "gold" }} />;
+
   return (
     <div className={classes.container}>
       <div className={classes.sidebar}>
@@ -98,6 +101,43 @@ const CoinPage = () => {
               }}
             >
               {coin?.market_cap_rank}
+            </Typography>
+          </span>
+          <span style={{ display: "flex" }}>
+            <Typography variant="h5" className={classes.heading}>
+              Current Price:
+            </Typography>
+            &nbsp; &nbsp;
+            <Typography
+              variant="h5"
+              style={{
+                fontFamily: "Montserrat",
+              }}
+            >
+              {symbol}{" "}
+              {numberWithCommas(
+                coin?.market_data.current_price[currency.toLowerCase()]
+              )}
+            </Typography>
+          </span>
+          <span style={{ display: "flex" }}>
+            <Typography variant="h5" className={classes.heading}>
+              Market Cap:{" "}
+            </Typography>
+            &nbsp; &nbsp;
+            <Typography
+              variant="h5"
+              style={{
+                fontFamily: "Montserrat",
+              }}
+            >
+              {symbol}{" "}
+              {numberWithCommas(
+                coin?.market_data.market_cap[currency.toLowerCase()]
+                  .toString()
+                  .slice(0, -6)
+              )}
+              M
             </Typography>
           </span>
         </div>
