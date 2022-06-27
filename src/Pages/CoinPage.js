@@ -19,16 +19,16 @@ const CoinPage = () => {
 
   // const fetchCoin = async () => {
   //   const { data } = await axios.get(SingleCoin(id));
-// 
+  //
   //   setCoin(data);
   // };
-// 
+  //
   // console.log(coin);
 
   useEffect(() => {
     const fetchCoin = async () => {
       const { data } = await axios.get(SingleCoin(id));
-  
+
       setCoin(data);
     };
 
@@ -41,7 +41,7 @@ const CoinPage = () => {
       [theme.breakpoints.down("md")]: {
         flexDirection: "column",
         alignItems: "center",
-      }
+      },
     },
     sidebar: {
       width: "30%",
@@ -66,6 +66,23 @@ const CoinPage = () => {
       paddingBottom: 15,
       paddingTop: 0,
       textAlign: "justify",
+    },
+    marketData: {
+      alignSelf: "start",
+      padding: 25,
+      paddingTop: 10,
+      width: "100%",
+      [theme.breakpoints.down("md")]: {
+        display: "flex",
+        justifyContent: "space-around",
+      },
+      [theme.breakpoints.down("sm")]: {
+        flexDirection: "column",
+        alignItems: "center",
+      },
+      [theme.breakpoints.down("xs")]: {
+        alignItems: "start",
+      },
     }
   }));
 
