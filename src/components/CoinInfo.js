@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { HistoricalChart } from "../config/api";
 import { CryptoState } from "../CryptoContext";
 import axios from "axios";
+import SelectButton from "./SelectButton";
 
 import {
   createTheme,
@@ -20,8 +21,8 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
-
+} from "chart.js";
+import { chartDays } from "../config/data";
 
 ChartJS.register(
   CategoryScale,
@@ -105,7 +106,8 @@ const CoinInfo = ({ coin }) => {
                     data: historicalData.map((coin) => coin[1]),
                     label: `Price (Past ${days} Days) in ${currency}`,
                     borderColor: "#EEBC1D",
-                  }],
+                  },
+                ],
               }}
               options={{
                 elements: {
@@ -115,6 +117,24 @@ const CoinInfo = ({ coin }) => {
                 },
               }}
             />
+            <div
+              style={{
+                display: "flex",
+                marginTop: 20,
+                justifyContent: "space-around",
+                width: "100%",
+              }}
+            >
+              {chartDays.map((day) => (
+                <SelectButton
+                  key={day.value}
+                  onClick={() => setDays(day.value)}
+                  selected={day.value === days}
+                >
+                  {day.label}
+                </SelectButton>
+              ))}
+            </div>
           </>
         )}
       </div>
